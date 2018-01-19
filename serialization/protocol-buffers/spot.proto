@@ -1,0 +1,14 @@
+syntax = "proto3";
+package samples;
+option java_package = "com.github.saint1991.samples";
+
+// enum should be CamelCase and each member should be UNDERSCORE_SEPARATED_CAPITALS
+enum SpotType {
+    A = 0; // begin with 0 in enum
+    S = 1;
+}
+
+message Spot {
+    int32 id = 1;
+    SpotType type = 2;
+}
