@@ -1,16 +1,14 @@
-import Keys._
-import sbtavrohugger.formats.specific.SpecificAvroSettings
-
-scalaVersion in ThisBuild := "2.12.4"
 
 val slf4jVersion = "1.7.21"
+
+scalaVersion in ThisBuild := "2.12.4"
 
 lazy val jmhSettings = Seq(
   sourceDirectory in Jmh := (sourceDirectory in Test).value,
   classDirectory in Jmh := (classDirectory in Test).value,
   resourceDirectory in Jmh := (resourceDirectory in Test).value,
   dependencyClasspath in Jmh := (dependencyClasspath in Test).value,
-  compile in Jmh := ((compile in Jmh) dependsOn (compile in Compile)).value,
+  compile in Jmh := ((compile in Jmh) dependsOn (compile in Test)).value,
   run in Jmh := ((run in Jmh) dependsOn (compile in Jmh)).evaluated
 ) ++ Seq(
   libraryDependencies ++= Seq(
@@ -34,21 +32,18 @@ lazy val jsonBench = (project in file("json-bench"))
     name := "json-bench",
     mainClass := Some("com.github.saint1991.samples.JsonBench"),
     libraryDependencies ++= Seq(
-      "io.circe" %% "circe-core" % "0.8.0",
-      "io.circe" %% "circe-generic" % "0.8.0",
-      "io.circe" %% "circe-parser" % "0.8.0"
+      "io.circe" %% "circe-core" % "0.9.2",
+      "io.circe" %% "circe-generic" % "0.9.2",
+      "io.circe" %% "circe-parser" % "0.9.2"
     )
   )
 
 lazy val protoBench = (project in file("proto-bench"))
-  .enablePlugins(JmhPlugin)
+  .enablePlugins(ProtocPlugin, JmhPlugin)
   .settings(jmhSettings)
   .settings(
     name := "protobuf-bench",
     mainClass := Some("com.github.saint1991.samples.ProtoBench"),
-    libraryDependencies ++= Seq(
-      "com.trueaccord.scalapb" %% "scalapb-runtime" % com.trueaccord.scalapb.compiler.Version.scalapbVersion % "protobuf"
-    )
   )
   .settings( // for ScalaPB
     PB.targets in Compile := Seq(scalapb.gen() -> (sourceManaged in Compile).value),
@@ -62,8 +57,8 @@ lazy val thriftBench = (project in file("thrift-bench"))
     name := "thrift-bench",
     mainClass := Some("com.github.saint1991.samples.ThriftBench"),
     libraryDependencies ++= Seq(
-      "org.apache.thrift" % "libthrift" % "0.10.0",
-      "com.twitter" %% "scrooge-core" % "4.18.0" exclude("com.twitter", "libthrift")
+      "org.apache.thrift" % "libthrift" % "0.11.0",
+      "com.twitter" %% "scrooge-core" % "18.3.0" exclude("com.twitter", "libthrift")
     )
   )
   .settings(
@@ -75,14 +70,22 @@ lazy val thriftBench = (project in file("thrift-bench"))
 lazy val avroBench = (project in file("avro-bench"))
   .enablePlugins(JmhPlugin)
   .settings(jmhSettings)
-  .settings(specificAvroSettings)
-  .settings(
-    sourceDirectory in avroConfig := file("serialization/avro"),
-    scalaSource in avroConfig := (sourceManaged in Compile).value,
-    compile in Compile := ((compile in Compile) dependsOn (SpecificAvroSettings.generateSpecific in avroConfig)).value
-  )
   .settings(
     name := "avro-bench",
     mainClass := Some("com.github.saint1991.samples.AvroBench"),
     libraryDependencies += "org.apache.avro" % "avro" % "1.8.2"
+  )
+  .settings(
+    avroSpecificSourceDirectory in Compile := file("serialization/avro"),
+    avroSpecificScalaSource in Compile := (sourceManaged in Compile).value,
+    sourceGenerators in Compile += (avroScalaGenerateSpecific in Compile).taskValue
+  )
+
+lazy val msgPackBench = (project in file("msgpack-bench"))
+  .enablePlugins(JmhPlugin)
+  .settings(jmhSettings)
+  .settings(
+    name := "msgpack-bench",
+    mainClass := Some("com.github.saint1991.samples.MsgPackBench"),
+    libraryDependencies += "org.msgpack" %% "msgpack-scala" % "0.8.13"
   )

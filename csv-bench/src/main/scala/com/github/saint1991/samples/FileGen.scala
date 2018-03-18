@@ -13,6 +13,8 @@ object FileGen extends App {
   val encodedDatasets = encode(dataset)
 
   // write to file
+  final val outDir = new File("out")
+  if (!outDir.exists) outDir.mkdir()
   final val outFile = new File("out/nobids.csv")
   outFile.createNewFile()
 

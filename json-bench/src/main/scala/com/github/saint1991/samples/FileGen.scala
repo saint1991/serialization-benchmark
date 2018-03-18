@@ -15,6 +15,8 @@ object FileGen extends App {
 
   implicit val encoder = Encoder.enumEncoder(SpotType)
 
+  final val outDir = new File("out")
+  if (!outDir.exists()) outDir.mkdir()
   final val outFile = new File("out/nobids.json")
   outFile.createNewFile()
 

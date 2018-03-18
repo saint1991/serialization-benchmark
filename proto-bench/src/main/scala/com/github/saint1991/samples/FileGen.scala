@@ -12,6 +12,8 @@ object FileGen extends App {
   final val N = 10000
   val dataset = DataSet.createDataset(N)
 
+  final val outDir = new File("out")
+  if (!outDir.exists()) outDir.mkdir()
   final val outFile = new File("out/nobids.protobuf")
   outFile.createNewFile()
 
