@@ -82,4 +82,6 @@ project/plugins/project/
 *.class
 *.log
 
+
+out
 # End of https://www.gitignore.io/api/sbt,scala,intellij

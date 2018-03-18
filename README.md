@@ -1,11 +1,6 @@
 
 # Benchmarks of Serialization Systems
 
-## Build
-```
-$ sbt jmh:compile
-```
-
 ## Run benchmarks
 ```
 $ sbt $project/jmh:run

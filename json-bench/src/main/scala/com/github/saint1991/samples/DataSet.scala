@@ -30,9 +30,8 @@ case class Nobid(
 )
 
 object DataSet {
-  def createDataset(n: Int): Seq[Nobid] = for {
-    i <- 1 to n
-    data = Nobid(
+  def createDataset(n: Int): Seq[Nobid] = Seq.fill(n) {
+    Nobid(
       adnwId = ThreadLocalRandom.current().nextInt(0, 8),
       appName = "sampleApp",
       auctionId = UUID.randomUUID().toString,
@@ -56,5 +55,5 @@ object DataSet {
         "ssp" -> "google"
       )
     )
-  } yield data
+  }
 }

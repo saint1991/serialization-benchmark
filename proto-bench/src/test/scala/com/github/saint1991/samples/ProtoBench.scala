@@ -7,18 +7,14 @@ import org.openjdk.jmh.annotations.{Benchmark => JmhBenchmark, BenchmarkMode, Mo
 class ProtoBench {
 
   final val N = 100000
-  val dataset = DataSet.createDataset(N)
+  val dataset: Seq[Nobid] = DataSet.createDataset(N)
 
-  val encodedDataset = encode()
+  val encodedDataset: Seq[Array[Byte]] = encode()
   decode()
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
-  def encode(): Seq[Array[Byte]] = {
-    dataset.map(_.toByteArray)
-  }
+  def encode(): Seq[Array[Byte]] = dataset.map(_.toByteArray)
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
-  def decode(): Seq[Nobid] = {
-    encodedDataset.map(Nobid.parseFrom)
-  }
+  def decode(): Seq[Nobid] = encodedDataset.map(Nobid.parseFrom)
 }

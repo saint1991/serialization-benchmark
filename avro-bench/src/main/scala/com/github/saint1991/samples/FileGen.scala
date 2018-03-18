@@ -16,6 +16,8 @@ object FileGen extends App {
   final val N = 10
   val dataset = DataSet.createDataset(N)
 
+  final val out = new File("out")
+  if (!out.exists()) out.mkdir()
   final val outFile = new File("out/nobids.avro")
   outFile.createNewFile()
 
