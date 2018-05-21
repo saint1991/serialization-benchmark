@@ -17,19 +17,19 @@ $ sbt $project/run
 ## Results
 ### Average time to encode 100,000 records in seconds.
 
-|Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with circe) |
+|Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) |
 |:--:|:--:|:--:|:--:|:--:|
-|0.039|0.148|0.169|0.099|0.558|
+|0.032|0.156|0.140|0.066|0.052|
 
 ### Average time to decode 100,000 binary records in seconds.
-|Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with circe) |
+|Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) |
 |:--:|:--:|:--:|:--:|:--:|
-|0.082|0.106|0.357|0.115|0.584|
+|0.073|0.095|0.347|0.106|0.104|
 
 ### Data size of 10,000 encoded records in MB.
-|Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with circe) |
+|Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) |
 |:--:|:--:|:--:|:--:|:--:|
-|1.87|1.83|1.69|1.75|3.23|
+|1.87|1.83|1.69|1.75|3.15|
 
 
 ## Schemas

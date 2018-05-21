@@ -1,7 +1,7 @@
 
 val slf4jVersion = "1.7.21"
 
-scalaVersion in ThisBuild := "2.12.4"
+scalaVersion in ThisBuild := "2.12.6"
 
 lazy val jmhSettings = Seq(
   sourceDirectory in Jmh := (sourceDirectory in Test).value,
@@ -32,9 +32,7 @@ lazy val jsonBench = (project in file("json-bench"))
     name := "json-bench",
     mainClass := Some("com.github.saint1991.samples.JsonBench"),
     libraryDependencies ++= Seq(
-      "io.circe" %% "circe-core" % "0.9.2",
-      "io.circe" %% "circe-generic" % "0.9.2",
-      "io.circe" %% "circe-parser" % "0.9.2"
+      "com.github.plokhotnyuk.jsoniter-scala" %% "macros" % "0.26.0"
     )
   )
 
