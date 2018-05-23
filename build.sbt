@@ -1,7 +1,7 @@
 
 val slf4jVersion = "1.7.21"
 
-scalaVersion in ThisBuild := "2.12.4"
+scalaVersion in ThisBuild := "2.12.6"
 
 lazy val jmhSettings = Seq(
   sourceDirectory in Jmh := (sourceDirectory in Test).value,
@@ -17,14 +17,6 @@ lazy val jmhSettings = Seq(
   )
 )
 
-lazy val csvBench = (project in file("csv-bench"))
-  .enablePlugins(JmhPlugin)
-  .settings(jmhSettings)
-  .settings(
-    name := "csv-bench",
-    mainClass := Some("com.github.saint1991.samples.CsvBench")
-  )
-
 lazy val jsonBench = (project in file("json-bench"))
   .enablePlugins(JmhPlugin)
   .settings(jmhSettings)
@@ -35,6 +27,25 @@ lazy val jsonBench = (project in file("json-bench"))
       "io.circe" %% "circe-core" % "0.9.2",
       "io.circe" %% "circe-generic" % "0.9.2",
       "io.circe" %% "circe-parser" % "0.9.2"
+    )
+  )
+
+lazy val csvBench = (project in file("csv-bench"))
+  .enablePlugins(JmhPlugin)
+  .settings(jmhSettings)
+  .settings(
+    name := "csv-bench",
+    mainClass := Some("com.github.saint1991.samples.CsvBench")
+  )
+
+lazy val jsoniterScalaBench = (project in file("jsoniter-scala-bench"))
+  .enablePlugins(JmhPlugin)
+  .settings(jmhSettings)
+  .settings(
+    name := "jsoniter-scala-bench",
+    mainClass := Some("com.github.saint1991.samples.JsonBench"),
+    libraryDependencies ++= Seq(
+      "com.github.plokhotnyuk.jsoniter-scala" %% "macros" % "0.26.0"
     )
   )
 

@@ -2,8 +2,8 @@ package com.github.saint1991.samples
 
 import java.util.concurrent.TimeUnit
 
-import org.apache.thrift.protocol.TCompactProtocol
-import org.apache.thrift.transport.{TMemoryBuffer, TMemoryInputTransport}
+import com.github.plokhotnyuk.jsoniter_scala.macros._
+import com.github.plokhotnyuk.jsoniter_scala.core._
 import org.openjdk.jmh.annotations.{BenchmarkMode, Fork, Measurement, Mode, OutputTimeUnit, Scope, State, Warmup, Benchmark => JmhBenchmark}
 
 @State(Scope.Thread)
@@ -22,30 +22,19 @@ import org.openjdk.jmh.annotations.{BenchmarkMode, Fork, Measurement, Mode, Outp
   "-XX:+AlwaysPreTouch"
 ))
 @OutputTimeUnit(TimeUnit.SECONDS)
-class ThriftBench {
-
+class JsonBench {
   final val N = 100000
   val dataset = DataSet.createDataset(N)
+
+  implicit val codec = JsonCodecMaker.make[Nobid](CodecMakerConfig())
 
   val encodedDataset = encode()
   decode()
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
-  def encode(): Seq[Array[Byte]] = {
-    dataset.map { r =>
-      val buf = new TMemoryBuffer(0)
-      val outProtocol = new TCompactProtocol(buf)
-      r.write(outProtocol)
-      buf.getArray
-    }
-  }
+  def encode(): Seq[Array[Byte]] = dataset.map(x => writeToArray(x))
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
-  def decode(): Seq[Nobid] = {
-    encodedDataset.map { r =>
-      val buf = new TMemoryInputTransport(r)
-      val inProtocol = new TCompactProtocol(buf)
-      Nobid.decode(inProtocol)
-    }
-  }
+  def decode(): Seq[Nobid] = encodedDataset.map(str => readFromArray(str))
 }
+
