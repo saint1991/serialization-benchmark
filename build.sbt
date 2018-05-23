@@ -17,6 +17,19 @@ lazy val jmhSettings = Seq(
   )
 )
 
+lazy val jsonBench = (project in file("json-bench"))
+  .enablePlugins(JmhPlugin)
+  .settings(jmhSettings)
+  .settings(
+    name := "json-bench",
+    mainClass := Some("com.github.saint1991.samples.JsonBench"),
+    libraryDependencies ++= Seq(
+      "io.circe" %% "circe-core" % "0.9.2",
+      "io.circe" %% "circe-generic" % "0.9.2",
+      "io.circe" %% "circe-parser" % "0.9.2"
+    )
+  )
+
 lazy val csvBench = (project in file("csv-bench"))
   .enablePlugins(JmhPlugin)
   .settings(jmhSettings)
@@ -25,11 +38,11 @@ lazy val csvBench = (project in file("csv-bench"))
     mainClass := Some("com.github.saint1991.samples.CsvBench")
   )
 
-lazy val jsonBench = (project in file("json-bench"))
+lazy val jsoniterScalaBench = (project in file("jsoniter-scala-bench"))
   .enablePlugins(JmhPlugin)
   .settings(jmhSettings)
   .settings(
-    name := "json-bench",
+    name := "jsoniter-scala-bench",
     mainClass := Some("com.github.saint1991.samples.JsonBench"),
     libraryDependencies ++= Seq(
       "com.github.plokhotnyuk.jsoniter-scala" %% "macros" % "0.26.0"
