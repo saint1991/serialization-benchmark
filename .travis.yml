@@ -1,0 +1,10 @@
+language: scala
+jdk: oraclejdk8
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/root
+before_script:
+  - sbt jmh:compile
+  - sbt avroBench/run circeBench/run csvBench/run jsoniterScalaBench/run protoBench/run thriftBench/run
+  - sbt avroBench/jmh:run circeBench/jmh:run csvBench/jmh:run jsoniterScalaBench/jmh:run protoBench/jmh:run thriftBench/jmh:run

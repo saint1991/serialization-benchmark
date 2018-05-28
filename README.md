@@ -1,5 +1,6 @@
 
 # Benchmarks of Serialization Systems
+[![Build Status](https://travis-ci.org/saint1991/serialization-benchmark.svg?branch=master)](https://travis-ci.org/saint1991/serialization-benchmark)
 
 ## Run benchmarks
 ```
@@ -33,4 +34,4 @@ $ sbt $project/run
 
 
 ## Schemas
-The data schemas used for this benchmark are located under [serialization](serialization)
+The data schemas used for this benchmark are located under [serialization](schema)
