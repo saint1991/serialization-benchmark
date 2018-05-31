@@ -36,7 +36,7 @@ cmake-build-debug/
 ## Plugin-specific files:
 
 # IntelliJ
-/serialization/out/
+/schema/out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
