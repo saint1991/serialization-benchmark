@@ -1,10 +1,9 @@
-package com.github.saint1991.serialization.benchmark
+package com.github.saint1991.serialization.benchmark.protobuf
 
 import java.util.concurrent.TimeUnit
 
 import org.openjdk.jmh.annotations.{BenchmarkMode, Fork, Measurement, Mode, OutputTimeUnit, Scope, State, Warmup, Benchmark => JmhBenchmark}
-
-import com.github.saint1991.serialization.benchmark.dataset._
+import com.github.saint1991.serialization.benchmark.protobuf.nobid.Nobid
 
 @State(Scope.Thread)
 @Warmup(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
@@ -22,22 +21,17 @@ import com.github.saint1991.serialization.benchmark.dataset._
   "-XX:+AlwaysPreTouch"
 ))
 @OutputTimeUnit(TimeUnit.SECONDS)
-class CsvBench {
-  import Csv._
+class ProtoBench {
 
   final val N = 100000
   val dataset: Seq[Nobid] = DataSet.createDataset(N)
 
-  val encodedDataset: Seq[String] = encode()
+  val encodedDataset: Seq[Array[Byte]] = encode()
   decode()
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
-  def encode(): Seq[String] = {
-    dataset.map(toCsv)
-  }
+  def encode(): Seq[Array[Byte]] = dataset.map(_.toByteArray)
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
-  def decode(): Seq[Nobid] = {
-    encodedDataset.map(fromCsv)
-  }
+  def decode(): Seq[Nobid] = encodedDataset.map(Nobid.parseFrom)
 }

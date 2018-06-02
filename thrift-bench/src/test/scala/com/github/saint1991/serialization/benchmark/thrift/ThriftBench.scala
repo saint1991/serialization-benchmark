@@ -1,4 +1,4 @@
-package com.github.saint1991.serialization.benchmark
+package com.github.saint1991.serialization.benchmark.thrift
 
 import java.util.concurrent.TimeUnit
 

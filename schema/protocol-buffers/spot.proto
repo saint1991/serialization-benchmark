@@ -1,6 +1,6 @@
 syntax = "proto3";
-package benchmark;
-option java_package = "com.github.saint1991.serialization.benchmark";
+package protobuf;
+option java_package = "com.github.saint1991.serialization.benchmark.protobuf";
 
 // enum should be CamelCase and each member should be UNDERSCORE_SEPARATED_CAPITALS
 enum SpotType {

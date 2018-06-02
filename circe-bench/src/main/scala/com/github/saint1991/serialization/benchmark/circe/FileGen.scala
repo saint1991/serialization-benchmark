@@ -1,6 +1,6 @@
-package com.github.saint1991.serialization.benchmark
+package com.github.saint1991.serialization.benchmark.circe
 
-import java.io.{File, FileOutputStream, PrintWriter}
+import java.io.{FileOutputStream, PrintWriter}
 
 import scala.util.control.Exception._
 
@@ -9,7 +9,7 @@ import io.circe.generic.auto._
 import io.circe.syntax._
 
 import com.github.saint1991.serialization.benchmark.dataset._
-
+import com.github.saint1991.serialization.benchmark.FileUtil
 
 object FileGen extends App {
 
@@ -18,12 +18,8 @@ object FileGen extends App {
 
   implicit val encoder: Encoder[SpotType.Value] = Encoder.enumEncoder(SpotType)
 
-  final val outDir = new File("out")
-  if (!outDir.exists()) outDir.mkdir()
-  final val outFile = new File("out/nobids.json")
-  outFile.createNewFile()
-
-  val out = new PrintWriter(new FileOutputStream(outFile))
+  final val outFile = FileUtil.mkOutFile("nobid-circe.json")
+  val out = new PrintWriter(new FileOutputStream(outFile.toJava))
 
   val encodedDatasets = encode(dataset)
   allCatch andFinally {
@@ -41,4 +37,3 @@ object FileGen extends App {
     }
   }
 }
-

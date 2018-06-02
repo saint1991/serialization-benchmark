@@ -1,5 +1,5 @@
 include "spot.thrift"
-namespace java com.github.saint1991.serialization.benchmark
+namespace java com.github.saint1991.serialization.benchmark.thrift
 
 struct Nobid {
     1: required i32                 adnw_id,

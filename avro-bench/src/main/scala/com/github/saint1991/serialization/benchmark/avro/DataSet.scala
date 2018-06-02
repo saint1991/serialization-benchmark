@@ -1,9 +1,10 @@
-package com.github.saint1991.serialization.benchmark
+package com.github.saint1991.serialization.benchmark.avro
 
 import java.util.UUID
 import java.util.concurrent.ThreadLocalRandom
 
 object DataSet {
+
   def createDataset(n: Int): Seq[Nobid] = Seq.fill(n) {
     Nobid(
       adnwId = ThreadLocalRandom.current().nextInt(0, 8),
@@ -15,11 +16,11 @@ object DataSet {
       nbr = 6260,
       page = Some("http://diamond.jp/articles/a/15434"),
       resTime = 4,
-      spot = Spot(
+      spot = spotRecord(
         id = 2406,
-        `type` = SpotType.S
+        `type` = spotType.A
       ),
-      history = Seq(
+      history = List(
         "a",
         "b",
         "c"
