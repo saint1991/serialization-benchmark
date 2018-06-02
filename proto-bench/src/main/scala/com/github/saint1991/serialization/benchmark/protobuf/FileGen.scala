@@ -4,13 +4,13 @@ import java.io.{FileOutputStream, OutputStream}
 
 import scala.util.control.Exception._
 
+import com.github.saint1991.serialization.benchmark.BenchmarkSettings.DatasetSize
 import com.github.saint1991.serialization.benchmark.FileUtil
 import com.github.saint1991.serialization.benchmark.protobuf.nobid.Nobid
 
 object FileGen extends App {
 
-  final val N = 10000
-  val dataset = DataSet.createDataset(N)
+  val dataset = DataSet.createDataset(DatasetSize)
 
   final val outFile = FileUtil.mkOutFile("nobid.protobuf")
   val out = new FileOutputStream(outFile.toJava)

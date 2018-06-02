@@ -1,15 +1,16 @@
 package com.github.saint1991.serialization.benchmark.avro
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
-import java.util.concurrent.TimeUnit
 
 import org.apache.avro.io.{DecoderFactory, EncoderFactory}
 import org.apache.avro.specific.{SpecificDatumReader, SpecificDatumWriter}
 import org.openjdk.jmh.annotations.{BenchmarkMode, Fork, Measurement, Mode, OutputTimeUnit, Scope, State, Warmup, Benchmark => JmhBenchmark}
 
+import com.github.saint1991.serialization.benchmark.BenchmarkSettings._
+
 @State(Scope.Thread)
-@Warmup(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = WarmUpIteration, time = 1, timeUnit = TUnit)
+@Measurement(iterations = Iteration, time = 1, timeUnit = TUnit)
 @Fork(value = 1, jvmArgs = Array(
   "-server",
   "-Xms2g",
@@ -22,15 +23,14 @@ import org.openjdk.jmh.annotations.{BenchmarkMode, Fork, Measurement, Mode, Outp
   "-XX:-UseBiasedLocking",
   "-XX:+AlwaysPreTouch"
 ))
-@OutputTimeUnit(TimeUnit.SECONDS)
+@OutputTimeUnit(TUnit)
 class AvroBench {
 
   final val Schema = Nobid.SCHEMA$
   val writer = new SpecificDatumWriter[Nobid](Schema)
   val reader = new SpecificDatumReader[Nobid](Schema)
 
-  final val N = 100000
-  val dataset: Seq[Nobid] = DataSet.createDataset(N)
+  val dataset: Seq[Nobid] = DataSet.createDataset(DatasetSize)
   val encoded: Seq[Array[Byte]] = encode()
   decode()
 

@@ -7,6 +7,7 @@ import scala.util.control.Exception.allCatch
 import org.apache.avro.file.DataFileWriter
 import org.apache.avro.specific.SpecificDatumWriter
 
+import com.github.saint1991.serialization.benchmark.BenchmarkSettings.DatasetSize
 import com.github.saint1991.serialization.benchmark.FileUtil
 
 object FileGen extends App {
@@ -14,8 +15,7 @@ object FileGen extends App {
   final val Schema = Nobid.SCHEMA$
   val writer = new SpecificDatumWriter[Nobid](Schema)
 
-  final val N = 10000
-  val dataset = DataSet.createDataset(N)
+  val dataset = DataSet.createDataset(DatasetSize)
 
   val outFile = FileUtil.mkOutFile("nobid.avro")
   val out = new BufferedOutputStream(new FileOutputStream(outFile.toJava))

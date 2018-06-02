@@ -8,13 +8,13 @@ import io.circe._
 import io.circe.generic.auto._
 import io.circe.syntax._
 
+import com.github.saint1991.serialization.benchmark.BenchmarkSettings.DatasetSize
 import com.github.saint1991.serialization.benchmark.dataset._
 import com.github.saint1991.serialization.benchmark.FileUtil
 
 object FileGen extends App {
 
-  final val N = 10000
-  val dataset = DataSet.createDataset(N)
+  val dataset = DataSet.createDataset(DatasetSize)
 
   implicit val encoder: Encoder[SpotType.Value] = Encoder.enumEncoder(SpotType)
 
