@@ -8,12 +8,12 @@ import scala.util.control.Exception._
 import org.apache.thrift.protocol.{TCompactProtocol, TProtocol}
 import org.apache.thrift.transport.TIOStreamTransport
 
+import com.github.saint1991.serialization.benchmark.BenchmarkSettings.DatasetSize
 import com.github.saint1991.serialization.benchmark.FileUtil
 
 object FileGen extends App {
 
-  final val N = 10000
-  val dataset = DataSet.createDataset(N)
+  val dataset = DataSet.createDataset(DatasetSize)
 
   val outFile = FileUtil.mkOutFile("nobid.thrift")
   val out = new BufferedOutputStream(new FileOutputStream(outFile.toJava))

@@ -9,14 +9,14 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 
 import org.msgpack.jackson.dataformat.MessagePackFactory
 
+import com.github.saint1991.serialization.benchmark.BenchmarkSettings.DatasetSize
 import com.github.saint1991.serialization.benchmark.dataset.{DataSet, Nobid}
 import com.github.saint1991.serialization.benchmark.FileUtil
 import com.github.saint1991.serialization.benchmark.FileUtil.NewLineBytes
 
 object FileGen extends App {
 
-  final val N = 10000
-  val dataset = DataSet.createDataset(N)
+  val dataset = DataSet.createDataset(DatasetSize)
 
   val mapper = new ObjectMapper(new MessagePackFactory())
   mapper.registerModule(DefaultScalaModule)

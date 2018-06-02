@@ -1,16 +1,15 @@
 package com.github.saint1991.serialization.benchmark.jsoniter
 
-import java.util.concurrent.TimeUnit
-
 import com.github.plokhotnyuk.jsoniter_scala.core._
 import com.github.plokhotnyuk.jsoniter_scala.macros._
 import org.openjdk.jmh.annotations.{BenchmarkMode, Fork, Measurement, Mode, OutputTimeUnit, Scope, State, Warmup, Benchmark => JmhBenchmark}
 
+import com.github.saint1991.serialization.benchmark.BenchmarkSettings._
 import com.github.saint1991.serialization.benchmark.dataset._
 
 @State(Scope.Thread)
-@Warmup(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = WarmUpIteration, time = 1, timeUnit = TUnit)
+@Measurement(iterations = Iteration, time = 1, timeUnit = TUnit)
 @Fork(value = 1, jvmArgs = Array(
   "-server",
   "-Xms2g",
@@ -23,11 +22,10 @@ import com.github.saint1991.serialization.benchmark.dataset._
   "-XX:-UseBiasedLocking",
   "-XX:+AlwaysPreTouch"
 ))
-@OutputTimeUnit(TimeUnit.SECONDS)
+@OutputTimeUnit(TUnit)
 class JsonIterScalaBench {
 
-  final val N = 100000
-  val dataset: Seq[Nobid] = DataSet.createDataset(N)
+  val dataset: Seq[Nobid] = DataSet.createDataset(DatasetSize)
 
   implicit val codec: JsonValueCodec[Nobid] = JsonCodecMaker.make[Nobid](CodecMakerConfig())
 
