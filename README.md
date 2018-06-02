@@ -14,8 +14,15 @@ where $project is one of the name of sbt sub project (e.g. avroBench)
 $ sbt $project/run
 ```
 
+## Schemas
+The schemas used in this benchmark are under [serialization](schema)
 
 ## Results
+
+**NOTE**: 
+This benchmark is taken place under the specific condition: 
+Under the other conditions, results may be different.
+
 ### Average time to encode 100,000 records in seconds.
 
 |Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) | JSON (with circe) |
@@ -28,10 +35,6 @@ $ sbt $project/run
 |0.073|0.095|0.347|0.106|0.104|0.355|
 
 ### Data size of 10,000 encoded records in MB.
-|Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) | JSON (with circe) |
-|:--:|:--:|:--:|:--:|:--:|:--:|
-|1.87|1.83|1.69|1.75|3.15|3.23|
-
-
-## Schemas
-The data schemas used for this benchmark are located under [serialization](schema)
+|Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON | MsgPack |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+|1.82|1.80|1.64|1.72|3.20|3.35|

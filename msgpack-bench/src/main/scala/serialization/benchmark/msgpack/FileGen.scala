@@ -6,10 +6,11 @@ import scala.util.control.Exception._
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import com.github.saint1991.serialization.benchmark.FileUtil
+
 import org.msgpack.jackson.dataformat.MessagePackFactory
 
 import com.github.saint1991.serialization.benchmark.dataset.{DataSet, Nobid}
+import com.github.saint1991.serialization.benchmark.FileUtil
 import com.github.saint1991.serialization.benchmark.FileUtil.NewLineBytes
 
 object FileGen extends App {
