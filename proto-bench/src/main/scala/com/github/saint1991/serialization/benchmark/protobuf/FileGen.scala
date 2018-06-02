@@ -13,7 +13,6 @@ object FileGen extends App {
   val dataset = DataSet.createDataset(N)
 
   final val outFile = FileUtil.mkOutFile("nobid.protobuf")
-
   val out = new FileOutputStream(outFile.toJava)
 
   // write to file

@@ -31,9 +31,9 @@ case class Nobid(
 object DataSet {
   def createDataset(n: Int): Seq[Nobid] = Seq.fill(n) {
     Nobid(
-      adnwId = ThreadLocalRandom.current().nextInt(0, 8),
+      adnwId = 12345,
       appName = "sampleApp",
-      auctionId = UUID.randomUUID().toString,
+      auctionId = "14241c7f-7db1-4bcd-a3f7-82885e08e7ec",
       host = "prd-dsp03",
       loggedAt = "2017-06-30 09:07:37.677",
       mId = 234,
