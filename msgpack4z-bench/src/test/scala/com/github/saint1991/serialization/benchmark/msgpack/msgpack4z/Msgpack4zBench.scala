@@ -1,12 +1,11 @@
-package com.github.saint1991.serialization.benchmark.msgpack
+package com.github.saint1991.serialization.benchmark.msgpack.msgpack4z
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import org.msgpack.jackson.dataformat.MessagePackFactory
+import msgpack4z.{Msgpack07Packer, Msgpack07Unpacker}
 import org.openjdk.jmh.annotations.{BenchmarkMode, Fork, Measurement, Mode, OutputTimeUnit, Scope, State, Warmup, Benchmark => JmhBenchmark}
 
-import com.github.saint1991.serialization.benchmark.BenchmarkSettings._
+import com.github.saint1991.serialization.benchmark.BenchmarkSettings.{DatasetSize, Iteration, TUnit, WarmUpIteration}
 import com.github.saint1991.serialization.benchmark.dataset.{DataSet, Nobid}
+import com.github.saint1991.serialization.benchmark.msgpack.msgpack4z.Codec._
 
 @State(Scope.Thread)
 @Warmup(iterations = WarmUpIteration, time = 1, timeUnit = TUnit)
@@ -24,19 +23,17 @@ import com.github.saint1991.serialization.benchmark.dataset.{DataSet, Nobid}
   "-XX:+AlwaysPreTouch"
 ))
 @OutputTimeUnit(TUnit)
-class MsgpackBench {
+class Msgpack4zBench {
 
   val dataset: Seq[Nobid] = DataSet.createDataset(DatasetSize)
-
-  val mapper = new ObjectMapper(new MessagePackFactory())
-  mapper.registerModule(DefaultScalaModule)
-
   val encodedDataset: Seq[Array[Byte]] = encode()
   decode()
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
-  def encode(): Seq[Array[Byte]] = dataset.map(x => mapper.writeValueAsBytes(x))
+  def encode(): Seq[Array[Byte]] = dataset.map { r => codec.toBytes(r, new Msgpack07Packer()) }
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
-  def decode(): Seq[Nobid] = encodedDataset.map(bytes => mapper.readValue[Nobid](bytes, classOf[Nobid]))
+  def decode(): Seq[Nobid] = encodedDataset.map { bytes =>
+    codec.unpack(Msgpack07Unpacker.defaultUnpacker(bytes)).getOrElse(throw new Exception("error on unpacking"))
+  }
 }

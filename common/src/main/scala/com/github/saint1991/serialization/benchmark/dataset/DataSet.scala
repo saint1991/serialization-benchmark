@@ -1,16 +1,7 @@
 package com.github.saint1991.serialization.benchmark.dataset
 
-import java.util.UUID
-import java.util.concurrent.ThreadLocalRandom
-
-object SpotType extends Enumeration {
-  final val A = Value(1)
-  final val S = Value(2)
-}
-
 case class Spot(
-  id: Int,
-  `type`: SpotType.Value
+  id: Int
 )
 
 case class Nobid(
@@ -24,7 +15,7 @@ case class Nobid(
   page: String,
   resTime: Int,
   spot: Spot,
-  history: Seq[String],
+  history: List[String],
   tags: Map[String, String]
 )
 
@@ -41,10 +32,9 @@ object DataSet {
       page = "http://diamond.jp/articles/-/15434",
       resTime = 4,
       spot = Spot(
-        id = 2406,
-        `type` = SpotType.S
+        id = 2406
       ),
-      history = Seq(
+      history = List(
         "a",
         "b",
         "c"

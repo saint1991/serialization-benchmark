@@ -4,7 +4,6 @@ import java.io.{BufferedOutputStream, FileOutputStream, PrintWriter}
 
 import scala.util.control.Exception._
 
-import io.circe._
 import io.circe.generic.auto._
 import io.circe.syntax._
 
@@ -15,8 +14,6 @@ import com.github.saint1991.serialization.benchmark.FileUtil
 object FileGen extends App {
 
   val dataset = DataSet.createDataset(DatasetSize)
-
-  implicit val encoder: Encoder[SpotType.Value] = Encoder.enumEncoder(SpotType)
 
   final val outFile = FileUtil.mkOutFile("nobid-circe.json")
   val out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(outFile.toJava)))

@@ -14,8 +14,7 @@ object DataSet {
       page = Some("http://diamond.jp/articles/a/15434"),
       resTime = 4,
       spot = spotRecord(
-        id = 2406,
-        `type` = spotType.A
+        id = 2406
       ),
       history = List(
         "a",

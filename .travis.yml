@@ -6,5 +6,5 @@ cache:
     - $HOME/.sbt/root
 before_script:
   - sbt jmh:compile
-  - sbt avroBench/run circeBench/run csvBench/run jsoniterScalaBench/run msgpackBench/run protoBench/run thriftBench/run
-  - sbt avroBench/jmh:run circeBench/jmh:run csvBench/jmh:run jsoniterScalaBench/jmh:run msgpackBench/jmh:run protoBench/jmh:run thriftBench/jmh:run
+  - sbt avroBench/run circeBench/run csvBench/run jsoniterScalaBench/run msgpackJacksonBench/run msgpack4zBench/run protoBench/run thriftBench/run
+  - sbt avroBench/jmh:run circeBench/jmh:run csvBench/jmh:run jsoniterScalaBench/jmh:run msgpackJacksonBench/jmh:run msgpack4zBench/jmh:run protoBench/jmh:run thriftBench/jmh:run

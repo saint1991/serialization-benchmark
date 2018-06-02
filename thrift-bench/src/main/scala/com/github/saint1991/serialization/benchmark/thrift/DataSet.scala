@@ -13,8 +13,7 @@ object DataSet {
       page = Some("http://diamond.jp/articles/a/15434"),
       resTime = 4,
       spot = Spot(
-        id = 2406,
-        `type` = SpotType.S
+        id = 2406
       ),
       history = Seq(
         "a",
