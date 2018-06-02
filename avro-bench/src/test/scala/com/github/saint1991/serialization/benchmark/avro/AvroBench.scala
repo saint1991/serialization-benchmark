@@ -32,6 +32,7 @@ class AvroBench {
   final val N = 100000
   val dataset: Seq[Nobid] = DataSet.createDataset(N)
   val encoded: Seq[Array[Byte]] = encode()
+  decode()
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
   def encode(): Seq[Array[Byte]] = {

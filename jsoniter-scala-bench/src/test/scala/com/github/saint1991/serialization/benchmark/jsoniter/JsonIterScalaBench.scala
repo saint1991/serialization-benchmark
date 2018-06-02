@@ -25,6 +25,7 @@ import com.github.saint1991.serialization.benchmark.dataset._
 ))
 @OutputTimeUnit(TimeUnit.SECONDS)
 class JsonIterScalaBench {
+
   final val N = 100000
   val dataset: Seq[Nobid] = DataSet.createDataset(N)
 
