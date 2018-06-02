@@ -1,6 +1,6 @@
 syntax = "proto3";
-package benchmark;
-option java_package = "com.github.saint1991.serialization.benchmark";
+package protobuf;
+option java_package = "com.github.saint1991.serialization.benchmark.protobuf";
 
 // SPEED (default) | CODE_SIZE | LITE_RUNTIME
 option optimize_for = SPEED;
@@ -23,7 +23,7 @@ message Nobid {
   int32  nbr = 7;
   string page = 8;
   int32  res_time = 9;
-  benchmark.Spot spot = 10;
+  protobuf.Spot spot = 10;
 
 
   repeated string history = 11;

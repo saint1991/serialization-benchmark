@@ -1,10 +1,7 @@
-package com.github.saint1991.serialization.benchmark
+package com.github.saint1991.serialization.benchmark.thrift
 
 import java.util.UUID
 import java.util.concurrent.ThreadLocalRandom
-
-import com.github.saint1991.serialization.benchmark.nobid.Nobid
-import com.github.saint1991.serialization.benchmark.spot.{Spot, SpotType}
 
 object DataSet {
   def createDataset(n: Int): Seq[Nobid] = Seq.fill(n) {
@@ -16,12 +13,12 @@ object DataSet {
       loggedAt = "2017-06-30 09:07:37.677",
       mId = 234,
       nbr = 6260,
-      page = "http://diamond.jp/articles/a/15434",
+      page = Some("http://diamond.jp/articles/a/15434"),
       resTime = 4,
-      spot = Some(Spot(
+      spot = Spot(
         id = 2406,
         `type` = SpotType.S
-      )),
+      ),
       history = Seq(
         "a",
         "b",

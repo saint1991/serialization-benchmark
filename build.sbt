@@ -19,7 +19,10 @@ lazy val jmhSettings = Seq(
 
 lazy val common = (project in file("common"))
   .settings(
-    name := "common"
+    name := "common",
+    libraryDependencies ++= Seq(
+      "com.github.pathikrit" %% "better-files" % "3.5.0"
+    )
   )
 
 lazy val csvBench = (project in file("csv-bench"))
@@ -57,19 +60,35 @@ lazy val jsoniterScalaBench = (project in file("jsoniter-scala-bench"))
   )
   .dependsOn(common % "compile->compile")
 
+lazy val msgpackBench = (project in file("msgpack-bench"))
+  .enablePlugins(JmhPlugin)
+  .settings(jmhSettings)
+  .settings(
+    name := "msgpack-bench",
+    mainClass := Some("com.github.saint1991.serialization.benchmark.FileGen"),
+    libraryDependencies ++= Seq(
+      "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.5",
+      "org.msgpack" % "jackson-dataformat-msgpack" % "0.8.16"
+    )
+  )
+  .dependsOn(common % "compile->compile")
+
 lazy val avroBench = (project in file("avro-bench"))
   .enablePlugins(JmhPlugin)
   .settings(jmhSettings)
   .settings(
     name := "avro-bench",
     mainClass := Some("com.github.saint1991.serialization.benchmark.FileGen"),
-    libraryDependencies += "org.apache.avro" % "avro" % "1.8.2"
+    libraryDependencies ++= Seq(
+      "org.apache.avro" % "avro" % "1.8.2"
+    )
   )
   .settings(
     avroSpecificSourceDirectory in Compile := file("schema/avro"),
     avroSpecificScalaSource in Compile := (sourceManaged in Compile).value,
     sourceGenerators in Compile += (avroScalaGenerateSpecific in Compile).taskValue
   )
+  .dependsOn(common % "compile->compile")
 
 lazy val protoBench = (project in file("proto-bench"))
   .enablePlugins(ProtocPlugin, JmhPlugin)
@@ -82,6 +101,7 @@ lazy val protoBench = (project in file("proto-bench"))
     PB.targets in Compile := Seq(scalapb.gen() -> (sourceManaged in Compile).value),
     PB.protoSources in Compile := Seq(file("schema/protocol-buffers"))
   )
+  .dependsOn(common % "compile->compile")
 
 lazy val thriftBench = (project in file("thrift-bench"))
   .enablePlugins(JmhPlugin)
@@ -99,3 +119,4 @@ lazy val thriftBench = (project in file("thrift-bench"))
     scroogeThriftSourceFolder in Compile := file("schema/thrift"),
     scroogeThriftOutputFolder in Compile := (sourceManaged in Compile).value
   )
+  .dependsOn(common % "compile->compile")

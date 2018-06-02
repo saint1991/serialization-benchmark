@@ -1,11 +1,15 @@
-package com.github.saint1991.serialization.benchmark
+package com.github.saint1991.serialization.benchmark.circe
 
-import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
+import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 
-import org.apache.avro.io.{DecoderFactory, EncoderFactory}
-import org.apache.avro.specific.{SpecificDatumReader, SpecificDatumWriter}
+import io.circe._
+import io.circe.syntax._
+import io.circe.generic.auto._
+import io.circe.parser._
 import org.openjdk.jmh.annotations.{BenchmarkMode, Fork, Measurement, Mode, OutputTimeUnit, Scope, State, Warmup, Benchmark => JmhBenchmark}
+
+import com.github.saint1991.serialization.benchmark.dataset._
 
 @State(Scope.Thread)
 @Warmup(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
@@ -23,34 +27,24 @@ import org.openjdk.jmh.annotations.{BenchmarkMode, Fork, Measurement, Mode, Outp
   "-XX:+AlwaysPreTouch"
 ))
 @OutputTimeUnit(TimeUnit.SECONDS)
-class AvroBench {
-
-  final val Schema = Nobid.SCHEMA$
-  val writer = new SpecificDatumWriter[Nobid](Schema)
-  val reader = new SpecificDatumReader[Nobid](Schema)
-
+class CirceBench {
   final val N = 100000
   val dataset: Seq[Nobid] = DataSet.createDataset(N)
-  val encoded: Seq[Array[Byte]] = encode()
+
+  implicit val encoder: Encoder[SpotType.Value] = Encoder.enumEncoder(SpotType)
+  implicit val decoder: Decoder[SpotType.Value] = Decoder.enumDecoder(SpotType)
+
+  val encodedDataset: Seq[Array[Byte]] = encode()
+  decode()
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
   def encode(): Seq[Array[Byte]] = {
-    dataset.map { nobid =>
-      val ostream = new ByteArrayOutputStream()
-      val encoder = EncoderFactory.get().binaryEncoder(ostream, null)
-      writer.write(nobid, encoder)
-      encoder.flush()
-      ostream.toByteArray
-    }
+    dataset.map(_.asJson.noSpaces.getBytes(StandardCharsets.UTF_8))
   }
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
   def decode(): Seq[Nobid] = {
-    encoded.map { record =>
-      val istream = new ByteArrayInputStream(record)
-      val decoder = DecoderFactory.get.binaryDecoder(istream, null)
-      reader.read(null, decoder)
-    }
+    encodedDataset.map(str => parse(new String(str, StandardCharsets.UTF_8)).right.get.as[Nobid].right.get)
   }
-
 }
+

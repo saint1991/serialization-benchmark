@@ -1,5 +1,5 @@
 {
-    "namespace": "com.github.saint1991.serialization.benchmark",
+    "namespace": "com.github.saint1991.serialization.benchmark.avro",
     "name":"Nobid",
     "type":"record",
     "fields":[

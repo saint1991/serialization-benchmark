@@ -1,7 +1,32 @@
-package com.github.saint1991.serialization.benchmark
+package com.github.saint1991.serialization.benchmark.dataset
 
 import java.util.UUID
 import java.util.concurrent.ThreadLocalRandom
+
+object SpotType extends Enumeration {
+  final val A = Value(1)
+  final val S = Value(2)
+}
+
+case class Spot(
+  id: Int,
+  `type`: SpotType.Value
+)
+
+case class Nobid(
+  adnwId: Int,
+  appName: String,
+  auctionId: String,
+  host: String,
+  loggedAt: String,
+  mId: Int,
+  nbr: Int,
+  page: String,
+  resTime: Int,
+  spot: Spot,
+  history: Seq[String],
+  tags: Map[String, String]
+)
 
 object DataSet {
   def createDataset(n: Int): Seq[Nobid] = Seq.fill(n) {
@@ -13,13 +38,13 @@ object DataSet {
       loggedAt = "2017-06-30 09:07:37.677",
       mId = 234,
       nbr = 6260,
-      page = Some("http://diamond.jp/articles/a/15434"),
+      page = "http://diamond.jp/articles/-/15434",
       resTime = 4,
-      spot = spotRecord(
+      spot = Spot(
         id = 2406,
-        `type` = spotType.A
+        `type` = SpotType.S
       ),
-      history = List(
+      history = Seq(
         "a",
         "b",
         "c"

@@ -1,4 +1,4 @@
-namespace java com.github.saint1991.serialization.benchmark
+namespace java com.github.saint1991.serialization.benchmark.thrift
 
 enum SpotType {
     A,

@@ -1,9 +1,10 @@
-package com.github.saint1991.serialization.benchmark
+package com.github.saint1991.serialization.benchmark.csv
 
-import java.io.{File, FileOutputStream, PrintWriter}
+import java.io.{FileOutputStream, PrintWriter}
 
 import scala.util.control.Exception._
 
+import com.github.saint1991.serialization.benchmark.FileUtil
 import com.github.saint1991.serialization.benchmark.dataset._
 
 object FileGen extends App {
@@ -15,12 +16,9 @@ object FileGen extends App {
   val encodedDatasets = encode(dataset)
 
   // write to file
-  final val outDir = new File("out")
-  if (!outDir.exists) outDir.mkdir()
-  final val outFile = new File("out/nobids.csv")
-  outFile.createNewFile()
+  final val outFile = FileUtil.mkOutFile("nobid.csv")
 
-  val out = new PrintWriter(new FileOutputStream(outFile))
+  val out = new PrintWriter(new FileOutputStream(outFile.toJava))
 
   allCatch andFinally {
     out.flush()
