@@ -1,6 +1,6 @@
 package com.github.saint1991.serialization.benchmark.jsoniter
 
-import java.io.FileOutputStream
+import java.io.{BufferedOutputStream, FileOutputStream}
 
 import scala.util.control.Exception._
 
@@ -18,10 +18,10 @@ object FileGen extends App {
   final val outFile = FileUtil.mkOutFile("nobid-jsoniter.json")
 
   implicit val codec: JsonValueCodec[Nobid] = JsonCodecMaker.make[Nobid](CodecMakerConfig())
-  val out = new FileOutputStream(outFile.toJava)
+  val out = new BufferedOutputStream(new FileOutputStream(outFile.toJava))
+
   allCatch andFinally {
     out.flush()
     out.close()
   } apply dataset.foreach(x => writeToStream(x, out))
-
 }

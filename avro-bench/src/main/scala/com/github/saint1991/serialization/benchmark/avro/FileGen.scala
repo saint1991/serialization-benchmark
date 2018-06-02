@@ -1,10 +1,9 @@
 package com.github.saint1991.serialization.benchmark.avro
 
-import java.io.File
+import java.io.{BufferedOutputStream, FileOutputStream}
 
 import scala.util.control.Exception.allCatch
 
-import org.apache.avro.Schema
 import org.apache.avro.file.DataFileWriter
 import org.apache.avro.specific.SpecificDatumWriter
 
@@ -19,18 +18,18 @@ object FileGen extends App {
   val dataset = DataSet.createDataset(N)
 
   val outFile = FileUtil.mkOutFile("nobid.avro")
+  val out = new BufferedOutputStream(new FileOutputStream(outFile.toJava))
   val outFileWriter = new DataFileWriter[Nobid](writer)
 
   // write to file
-  writeToFile(dataset, Schema, outFile.toJava, outFileWriter)
+  allCatch andFinally {
+    outFileWriter.flush()
+    outFileWriter.close()
+  } apply writeToFile(dataset, outFileWriter)
 
-  private def writeToFile(dataset: Seq[Nobid], writerSchema: Schema, file: File, writer: DataFileWriter[Nobid]): Unit = allCatch andFinally {
-    writer.flush()
-    writer.close()
-  } apply {
-    writer.create(writerSchema, file)
-    dataset.foreach { nobid =>
-      writer.append(nobid)
-    }
+  private def writeToFile(dataset: Seq[Nobid], writer: DataFileWriter[Nobid]): Unit = {
+    outFileWriter.create(Schema, out)
+    dataset.foreach { nobid => writer.append(nobid) }
   }
+
 }

@@ -1,6 +1,6 @@
 package com.github.saint1991.serialization.benchmark.circe
 
-import java.io.{FileOutputStream, PrintWriter}
+import java.io.{BufferedOutputStream, FileOutputStream, PrintWriter}
 
 import scala.util.control.Exception._
 
@@ -19,21 +19,17 @@ object FileGen extends App {
   implicit val encoder: Encoder[SpotType.Value] = Encoder.enumEncoder(SpotType)
 
   final val outFile = FileUtil.mkOutFile("nobid-circe.json")
-  val out = new PrintWriter(new FileOutputStream(outFile.toJava))
+  val out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(outFile.toJava)))
 
-  val encodedDatasets = encode(dataset)
   allCatch andFinally {
     out.flush()
     out.close()
-  } apply writeToFile(encodedDatasets, out)
+  } apply writeToFile(dataset, out)
 
-  private def encode(nobids: Seq[Nobid]): Seq[String] = {
-    nobids.map(_.asJson.noSpaces)
-  }
-
-  private def writeToFile(encoded: Seq[String], out: PrintWriter): Unit = {
-    encoded.foreach { r =>
-      out.println(r)
+  private def writeToFile(dataset: Seq[Nobid], out: PrintWriter): Unit =
+    dataset.foreach { r =>
+      val record = r.asJson.noSpaces
+      out.println(record)
     }
-  }
+
 }
