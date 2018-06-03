@@ -2,6 +2,14 @@
 # Benchmarks against Serialization Systems
 [![Build Status](https://travis-ci.org/saint1991/serialization-benchmark.svg?branch=master)](https://travis-ci.org/saint1991/serialization-benchmark)
 
+
+## Characteristics
+
+| | Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON | MessagePack |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+|        Schema-less?        | No | No | No | No | Yes | Yes |
+| Require compiling schema in advance? | Yes | Yes | No | No | No | No |
+
 ## Run benchmarks
 ```
 $ sbt $project/jmh:run
@@ -33,8 +41,8 @@ The schemas used in this benchmark are under [serialization](schema)
 - Average of 20 iteration
 
 | Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) | JSON (with circe) | MessagePack (jackson-module-msgpack) |
-| :--: | :---: | :---: | :---: | :--: | :---: | :---: |
-| 43.1 | 231.6 | 230.0 | 112.3 | 74.5 | 485.6 | 359.8 |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 43.1  | 231.6 | 230.0 | 112.3 | 74.5  | 485.6 | 359.8 |
 
 ### Average time to decode 100,000 binary records in milli seconds.
 
@@ -48,5 +56,5 @@ The schemas used in this benchmark are under [serialization](schema)
 ### Data size of 100,000 encoded records in MB.
 
 | Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON | MessagePack |
-| :--: | :--: | :--: | :--: | :--: | :--: |
-| 18.0 | 17.8 | 16.3 | 17.0 | 30.9 | 24.8 |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| 18.0  | 17.8  | 16.3  | 17.0  | 30.9  | 24.8  |
