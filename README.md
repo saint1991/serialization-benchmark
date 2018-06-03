@@ -27,26 +27,26 @@ The schemas used in this benchmark are under [serialization](schema)
 - CPU: Intel(R) Xeon(R) CPU E5-2680 v3 2.50GHz, 4 cores
 - Memory: 14GB
 
-### Average time to encode 100,000 records in seconds.
+### Average time to encode 100,000 records in milli seconds.
 
 - 20 warming up iteration
 - Average of 20 iteration
 
-|Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) | JSON (with circe) |
-|:--:|:--:|:--:|:--:|:--:|:--:|
-|0.032|0.156|0.140|0.066|0.052|0.302|
+| Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) | JSON (with circe) | MessagePack (jackson-module-msgpack) |
+| :--: | :---: | :---: | :---: | :--: | :---: | :---: |
+| 43.1 | 231.6 | 230.0 | 112.3 | 74.5 | 485.6 | 359.8 |
 
-### Average time to decode 100,000 binary records in seconds.
+### Average time to decode 100,000 binary records in milli seconds.
 
 - 20 warming up iteration
 - Average of 20 iteration
 
-|Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) | JSON (with circe) |
-|:--:|:--:|:--:|:--:|:--:|:--:|
-|0.073|0.095|0.347|0.106|0.104|0.355|
+| Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) | JSON (with circe) | MessagePack (jackson-module-msgpack) |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 136.4 | 166.5 | 577.6 | 168.0 | 154.8 | 503.3 | 408.7 |
 
 ### Data size of 100,000 encoded records in MB.
 
-|Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON | MsgPack |
-|:--:|:--:|:--:|:--:|:--:|:--:|
-|18.0|17.8|16.3|17.0|30.9|24.8|
+| Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON | MessagePack |
+| :--: | :--: | :--: | :--: | :--: | :--: |
+| 18.0 | 17.8 | 16.3 | 17.0 | 30.9 | 24.8 |
