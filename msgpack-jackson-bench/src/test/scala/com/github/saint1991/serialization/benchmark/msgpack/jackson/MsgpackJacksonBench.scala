@@ -1,14 +1,12 @@
-package com.github.saint1991.serialization.benchmark.circe
+package com.github.saint1991.serialization.benchmark.msgpack.jackson
 
-import java.nio.charset.StandardCharsets
-
-import io.circe.syntax._
-import io.circe.generic.auto._
-import io.circe.parser._
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import org.msgpack.jackson.dataformat.MessagePackFactory
 import org.openjdk.jmh.annotations.{BenchmarkMode, Fork, Measurement, Mode, OutputTimeUnit, Scope, State, Warmup, Benchmark => JmhBenchmark}
 
 import com.github.saint1991.serialization.benchmark.BenchmarkSettings._
-import com.github.saint1991.serialization.benchmark.dataset._
+import com.github.saint1991.serialization.benchmark.dataset.{DataSet, Nobid}
 
 @State(Scope.Thread)
 @Warmup(iterations = WarmUpIteration, time = 1, timeUnit = TUnit)
@@ -26,21 +24,19 @@ import com.github.saint1991.serialization.benchmark.dataset._
   "-XX:+AlwaysPreTouch"
 ))
 @OutputTimeUnit(TUnit)
-class CirceBench {
+class MsgpackJacksonBench {
 
   val dataset: Seq[Nobid] = DataSet.createDataset(DatasetSize)
+
+  val mapper = new ObjectMapper(new MessagePackFactory())
+  mapper.registerModule(DefaultScalaModule)
 
   val encodedDataset: Seq[Array[Byte]] = encode()
   decode()
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
-  def encode(): Seq[Array[Byte]] = {
-    dataset.map(_.asJson.noSpaces.getBytes(StandardCharsets.UTF_8))
-  }
+  def encode(): Seq[Array[Byte]] = dataset.map(x => mapper.writeValueAsBytes(x))
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
-  def decode(): Seq[Nobid] = {
-    encodedDataset.map(str => parse(new String(str, StandardCharsets.UTF_8)).right.get.as[Nobid].right.get)
-  }
+  def decode(): Seq[Nobid] = encodedDataset.map(bytes => mapper.readValue[Nobid](bytes, classOf[Nobid]))
 }
-

@@ -16,12 +16,7 @@
             "name": "spotRecord",
             "type": "record",
             "fields": [
-                {"name": "id", "type": "int"},
-                {"name": "type", "type": {
-                    "name": "spotType",
-                    "type": "enum",
-                    "symbols": ["A", "S"]
-                }}
+                {"name": "id", "type": "int"}
             ]
         }},
         {"name": "history", "type": {

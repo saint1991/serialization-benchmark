@@ -45,8 +45,8 @@ The schemas used in this benchmark are under [serialization](schema)
 |:--:|:--:|:--:|:--:|:--:|:--:|
 |0.073|0.095|0.347|0.106|0.104|0.355|
 
-### Data size of 10,000 encoded records in MB.
+### Data size of 100,000 encoded records in MB.
 
 |Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON | MsgPack |
 |:--:|:--:|:--:|:--:|:--:|:--:|
-|1.82|1.80|1.64|1.72|3.20|3.35|
+|18.0|17.8|16.3|17.0|30.9|24.8|

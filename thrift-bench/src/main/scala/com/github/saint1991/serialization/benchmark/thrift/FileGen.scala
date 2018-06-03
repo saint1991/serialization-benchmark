@@ -22,9 +22,9 @@ object FileGen extends App {
   allCatch andFinally {
     out.flush()
     out.close()
-  } apply writeToFile(dataset, out, outProtocol)
+  } apply writeToFile(dataset, outProtocol)
 
-  private def writeToFile(dataset: Seq[Nobid], out: OutputStream, outProtocol: TProtocol): Unit =
+  private def writeToFile(dataset: Seq[Nobid], outProtocol: TProtocol): Unit =
     dataset.foreach { r =>
       r.write(outProtocol)
       outProtocol.writeBinary(ByteBuffer.wrap(FileUtil.NewLineBytes))
