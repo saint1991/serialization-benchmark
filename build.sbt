@@ -23,7 +23,10 @@ lazy val common = (project in file("common"))
   .settings(
     name := "common",
     libraryDependencies ++= Seq(
-      "com.github.pathikrit" %% "better-files" % "3.5.0"
+      "com.github.pathikrit" %% "better-files" % "3.5.0",
+      "log4j" % "log4j" % "1.2.17",
+      "org.slf4j" % "slf4j-api" % "1.7.25",
+      "ch.qos.logback" % "logback-classic" % "1.2.3",
     )
   )
 
