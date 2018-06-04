@@ -23,7 +23,7 @@ $ sbt $project/run
 ```
 
 ## Schemas
-The schemas used in this benchmark are under [serialization](schema)
+The schemas used in this benchmark are under [schema](schema)
 
 ## Results
 
@@ -34,6 +34,7 @@ The schemas used in this benchmark are under [serialization](schema)
 - OS: Ubuntu 16.04 TLS
 - CPU: Intel(R) Xeon(R) CPU E5-2680 v3 2.50GHz, 4 cores
 - Memory: 14GB
+- Java(TM) SE Runtime Environment (build 1.8.0_171-b11), Java HotSpot(TM) 64-Bit Server VM (build 25.171-b11, mixed mode)
 
 ### Average time to encode 100,000 records in milli seconds.
 
