@@ -1,8 +1,7 @@
 package com.github.saint1991.serialization.benchmark.msgpack.msgpack4z
 
-import msgpack4z.{Msgpack07Packer, Msgpack07Unpacker}
+import msgpack4z.{MsgInBuffer, MsgOutBuffer}
 import org.openjdk.jmh.annotations.{BenchmarkMode, Fork, Measurement, Mode, OutputTimeUnit, Scope, State, Warmup, Benchmark => JmhBenchmark}
-
 import com.github.saint1991.serialization.benchmark.BenchmarkSettings.{DatasetSize, Iteration, TUnit, WarmUpIteration}
 import com.github.saint1991.serialization.benchmark.dataset.{DataSet, Nobid}
 import com.github.saint1991.serialization.benchmark.msgpack.msgpack4z.Codec._
@@ -30,10 +29,10 @@ class Msgpack4zBench {
   decode()
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
-  def encode(): Seq[Array[Byte]] = dataset.map { r => codec.toBytes(r, new Msgpack07Packer()) }
+  def encode(): Seq[Array[Byte]] = dataset.map { r => codec.toBytes(r, MsgOutBuffer.create()) }
 
   @JmhBenchmark @BenchmarkMode(Array(Mode.AverageTime))
   def decode(): Seq[Nobid] = encodedDataset.map { bytes =>
-    codec.unpack(Msgpack07Unpacker.defaultUnpacker(bytes)).getOrElse(throw new Exception("error on unpacking"))
+    codec.unpack(MsgInBuffer(bytes)).getOrElse(throw new Exception("error on unpacking"))
   }
 }

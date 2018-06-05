@@ -27,7 +27,7 @@ object FileGen extends App {
 
   private def writeToFile[T](dataset: Seq[T], codec: MsgpackCodec[T], file: OutputStream): Unit =
     dataset.foreach { r =>
-      val packer = new Msgpack07Packer()
+      val packer = MsgOutBuffer.create()
       val bytes = codec.toBytes(r, packer)
       file.write(bytes)
       file.write(NewLineBytes)

@@ -4,4 +4,5 @@ option java_package = "com.github.saint1991.serialization.benchmark.protobuf";
 
 message Spot {
     int32 id = 1;
+    string name = 2;
 }

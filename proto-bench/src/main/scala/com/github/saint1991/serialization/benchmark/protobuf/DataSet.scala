@@ -16,7 +16,8 @@ object DataSet {
       page = "http://diamond.jp/articles/a/15434",
       resTime = 4,
       spot = Some(Spot(
-        id = 2406
+        id = 2406,
+        name = "Mie"
       )),
       history = Seq(
         "a",

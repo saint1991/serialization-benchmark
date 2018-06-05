@@ -1,7 +1,8 @@
 package com.github.saint1991.serialization.benchmark.dataset
 
 case class Spot(
-  id: Int
+  id: Int,
+  name: String
 )
 
 case class Nobid(
@@ -32,7 +33,8 @@ object DataSet {
       page = "http://diamond.jp/articles/-/15434",
       resTime = 4,
       spot = Spot(
-        id = 2406
+        id = 2406,
+        name = "Mie"
       ),
       history = List(
         "a",

@@ -11,10 +11,11 @@ object DataSet {
       loggedAt = "2017-06-30 09:07:37.677",
       mId = 234,
       nbr = 6260,
-      page = Some("http://diamond.jp/articles/a/15434"),
+      page = Some("http://diamond.jp/articles/-/15434"),
       resTime = 4,
       spot = spotRecord(
-        id = 2406
+        id = 2406,
+        name = "Mie"
       ),
       history = List(
         "a",
