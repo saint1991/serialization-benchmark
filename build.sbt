@@ -76,7 +76,7 @@ lazy val msgpack4zBench = (project in file("msgpack4z-bench"))
     mainClass := Some("com.github.saint1991.serialization.benchmark.msgpack.msgpack4z.FileGen"),
     libraryDependencies ++= Seq(
       "com.github.xuwei-k" %% "msgpack4z-core" % "0.3.9",
-      "com.github.xuwei-k" % "msgpack4z-java07" % "0.2.0"
+      "com.github.xuwei-k" %% "msgpack4z-native" % "0.3.5"
     )
   )
   .dependsOn(common % "compile->compile")

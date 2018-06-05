@@ -34,28 +34,28 @@ The schemas used in this benchmark are under [schema](schema)
 - OS: Ubuntu 16.04 TLS
 - CPU: Intel(R) Xeon(R) CPU E5-2680 v3 2.50GHz, 4 cores
 - Memory: 14GB
-- Java(TM) SE Runtime Environment (build 1.8.0_171-b11), Java HotSpot(TM) 64-Bit Server VM (build 25.171-b11, mixed mode)
+- JDK 1.8.0_171, Java HotSpot(TM) 64-Bit Server VM, 25.171-b11
 
 ### Average time to encode 100,000 records in milli seconds.
 
 - 20 warming up iteration
 - Average of 20 iteration
 
-| Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) | JSON (with circe) | MessagePack (jackson-module-msgpack) |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| 43.1  | 231.6 | 230.0 | 112.3 | 74.5  | 485.6 | 359.8 |
+| Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) | JSON (with circe) | MessagePack (jackson-module-msgpack) | MessagePack (msgpack4z) |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 43.0  | 235.8 | 232.6 | 116.8 | 74.6  | 488.7 | 354.8 | 358.0  |
 
 ### Average time to decode 100,000 binary records in milli seconds.
 
 - 20 warming up iteration
 - Average of 20 iteration
 
-| Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) | JSON (with circe) | MessagePack (jackson-module-msgpack) |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| 136.4 | 166.5 | 577.6 | 168.0 | 154.8 | 503.3 | 408.7 |
+| Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON (with jsoniter-scala) | JSON (with circe) | MessagePack (jackson-module-msgpack) | MessagePack (msgpack4z) |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 139.5 | 162.9 | 586.0 | 160.8 | 151.3 | 503.5 | 414.9 | 609.5 |
 
 ### Data size of 100,000 encoded records in MB.
 
 | Protocol Buffers (proto3) | Thrift (compact protocol) | Avro | CSV | JSON | MessagePack |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| 18.0  | 17.8  | 16.3  | 17.0  | 30.9  | 24.8  |
+| 18.5  | 18.3  | 16.7  | 17.4  | 32.2  | 25.7  |
